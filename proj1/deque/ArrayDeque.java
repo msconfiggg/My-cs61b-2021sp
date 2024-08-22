@@ -16,7 +16,7 @@ public class ArrayDeque<T> {
 
     private void resize(int capacity) {
         T[] newItems = (T[]) new Object[capacity];
-        if (capacity < size) {
+        if (capacity < items.length) {
             System.arraycopy(items, (nextFirst + 1) % items.length, newItems, 0, size);
         } else {
             if (nextFirst + 1 == nextLast) {
@@ -63,12 +63,11 @@ public class ArrayDeque<T> {
     public void printDeque() {
         int i = 0;
         while (i < size - 1) {
-            System.out.println(items[i] + " ");
+            System.out.print(items[i] + " ");
             i += 1;
         }
 
         System.out.println(items[i]);
-        System.out.println();
     }
 
     public T removeFirst() {
