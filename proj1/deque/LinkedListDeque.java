@@ -1,8 +1,6 @@
 package deque;
 
-import java.util.Deque;
-
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T> {
     private final Node sentinel;
     private int size;
 
@@ -38,10 +36,6 @@ public class LinkedListDeque<T> {
         newNode.prev = sentinel.prev;
         sentinel.prev = newNode;
         size += 1;
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     public int size() {
@@ -118,6 +112,33 @@ public class LinkedListDeque<T> {
         }
 
         return getRecursiveHelper(p.next, index - 1);
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Deque)) {
+            return false;
+        }
+
+        Deque<T> O = (Deque<T>) o;
+        if (O.size() != size()) {
+            return false;
+        }
+
+        for (int i = 0; i < size; i++) {
+            if (O.get(i) != get(i)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }

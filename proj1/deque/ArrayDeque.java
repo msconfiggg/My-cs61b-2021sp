@@ -1,6 +1,6 @@
 package deque;
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T> {
     private T[] items;
     private int size;
     private int nextFirst;
@@ -50,10 +50,6 @@ public class ArrayDeque<T> {
         items[nextLast] = item;
         nextLast = (nextLast + 1) % items.length;
         size += 1;
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
     }
 
     public int size() {
@@ -111,4 +107,32 @@ public class ArrayDeque<T> {
 
         return items[(nextFirst + index + 1) % items.length];
     }
+
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o instanceof Deque)) {
+            return false;
+        }
+
+        Deque<T> O = (Deque<T>) o;
+        if (O.size() != size()) {
+            return false;
+        }
+
+        for (int i = 0; i < size; i++) {
+            if (O.get(i) != get(i)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
