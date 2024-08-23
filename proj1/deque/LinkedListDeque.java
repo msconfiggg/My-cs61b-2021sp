@@ -108,7 +108,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return getRecursiveHelper(p, index);
     }
 
-    public T getRecursiveHelper(Node p, int index) {
+    private T getRecursiveHelper(Node p, int index) {
         if (index == 0) {
             return p.item;
         }
@@ -122,7 +122,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     private class LinkedListIterator implements Iterator<T> {
         private int wizPos;
-        public LinkedListIterator() {
+        private LinkedListIterator() {
             wizPos = 0;
         }
 
@@ -156,7 +156,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         }
 
         for (int i = 0; i < size; i++) {
-            if (O.get(i) != get(i)) {
+            if (!O.get(i).equals(get(i))) {
                 return false;
             }
         }

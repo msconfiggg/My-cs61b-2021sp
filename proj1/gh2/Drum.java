@@ -39,7 +39,8 @@ public class Drum {
      * the Karplus-Strong algorithm.
      */
     public void tic() {
-        double r = Math.random() < 0.5 ? (buffer.get(0) + buffer.get(1)) * DECAY / 2 : (buffer.get(0) + buffer.get(1)) * DECAY / (-2);
+        double r = (buffer.get(0) + buffer.get(1)) * DECAY / 2;
+        r = Math.random() < 0.5 ? r : -r;
         buffer.removeFirst();
         buffer.addLast(r);
     }
