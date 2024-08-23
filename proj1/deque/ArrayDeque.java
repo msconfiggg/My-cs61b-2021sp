@@ -18,17 +18,16 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private void resize(int capacity) {
         T[] newItems = (T[]) new Object[capacity];
-        if (capacity < items.length) {
-            System.arraycopy(items, (nextFirst + 1) % items.length, newItems, 0, size);
-        } else {
-            if (nextFirst + 1 == nextLast) {
-                System.arraycopy(items, nextLast, newItems, 0, size - nextLast);
-                System.arraycopy(items, 0, newItems, size - nextLast, nextLast);
-            } else {
-                System.arraycopy(items, nextLast, newItems, 0, size);
-            }
-        }
+        int start = (nextFirst + 1) % items.length;
+        int end = (nextLast + items.length - 1) % items.length;
 
+        if (start > end) {
+            System.arraycopy(items, start, newItems, 0, items.length - start);
+            System.arraycopy(items, 0, newItems, items.length - start, size - items.length + start);
+        } else {
+            System.arraycopy(items, start, newItems, 0, size);
+        }
+        
         items = newItems;
         nextFirst = capacity - 1;
         nextLast = size;
