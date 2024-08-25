@@ -26,3 +26,4 @@ public class Collatz {
 }
 
 This is branchB content.
+This is branchB content.
