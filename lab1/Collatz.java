@@ -23,4 +23,4 @@ public class Collatz {
         }
         System.out.println();
     }
-}This is branchA content.
+}
