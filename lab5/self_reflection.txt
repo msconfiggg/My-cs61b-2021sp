@@ -8,7 +8,7 @@ A:
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A:The revise method
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
@@ -16,11 +16,11 @@ A:
 
 Q: What did you learn by talking to your partner about writing ArrayDeque?
 
-A:
+A:No partner:(
 
 Q: What do you wish you would have known before writing ArrayDeque, if anything?
 
-A:
+A:Treating it as circular.
 
 Q: If you wrote ArrayDeque again, what would you do differently, if anything?
 
@@ -44,7 +44,7 @@ A:
 
 Q: What did you learn by talking to your partner about writing LinkedListDeque?
 
-A:
+A:No partner:(
 
 Q: What do you wish you would have known before writing LinkedListDeque, if anything?
 
@@ -60,4 +60,4 @@ Meta:
 
 Q: Did you like this design review process? Anything we should do differently next time?
 
-A: 
+A: Yes.
