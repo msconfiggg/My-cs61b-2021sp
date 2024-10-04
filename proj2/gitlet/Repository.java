@@ -310,6 +310,10 @@ public class Repository {
 
     public void checkout2(String commitHash, String fileName) {
         commitHash = abbrHash(commitHash);
+        if (commitHash.equals("No commit with that id exists.")) {
+            throw new GitletException("No commit with that id exists.");
+        }
+
         commits = getCommits();
         Commit commit = commits.get(commitHash);
         if (!commit.getBlobs().containsKey(fileName)) {
@@ -386,6 +390,10 @@ public class Repository {
 
     public void reset(String commitHash) {
         commitHash = abbrHash(commitHash);
+        if (commitHash.equals("No commit with that id exists.")) {
+            throw new GitletException("No commit with that id exists.");
+        }
+        
         commits = getCommits();
         Commit headCommit = getHead();
         Commit commit = commits.get(commitHash);
@@ -743,18 +751,18 @@ public class Repository {
 
     public String abbrHash(String hash) {
         final int len = 40;
-        if (hash.length() == 40) {
+        if (hash.length() == len) {
             return hash;
         }
 
         commits = getCommits();
-        for(String key: commits.keySet()) {
+        for (String key: commits.keySet()) {
             if (key.startsWith(hash)) {
                 return key;
             }
         }
 
-        throw new GitletException("No commit with that id exists.");
+        return "No commit with that id exists.";
     }
 
     public File getRepo() {
