@@ -1,7 +1,7 @@
 package gitlet;
 
 /** Driver class for Gitlet, a subset of the Git version-control system.
- *  @author TODO
+ *  @author msconfig
  */
 public class Main {
 
@@ -20,7 +20,6 @@ public class Main {
     }
 
     public static void helper(String[] args) {
-        // TODO: what if args is empty?
         Repository repo = new Repository();
         if (args.length == 0) {
             throw new GitletException("Please enter a command.");
@@ -33,7 +32,6 @@ public class Main {
 
         switch(firstArg) {
             case "init":
-                // TODO: handle the `init` command
                 if (args.length == 1) {
                     repo.init();
                 } else {
@@ -41,14 +39,12 @@ public class Main {
                 }
                 break;
             case "add":
-                // TODO: handle the `add [filename]` command
                 if (args.length == 2) {
                     repo.add(args[1]);
                 } else {
                     throw new GitletException("Incorrect operands.");
                 }
                 break;
-            // TODO: FILL THE REST IN
             case "commit":
                 if (args.length == 2) {
                     repo.commit(args[1]);

@@ -309,11 +309,8 @@ public class Repository {
     }
 
     public void checkout2(String commitHash, String fileName) {
+        commitHash = abbrHash(commitHash);
         commits = getCommits();
-        if (!commits.containsKey(commitHash)) {
-            throw new GitletException("No commit with that id exists.");
-        }
-
         Commit commit = commits.get(commitHash);
         if (!commit.getBlobs().containsKey(fileName)) {
             throw new GitletException("File does not exist in that commit.");
@@ -388,11 +385,8 @@ public class Repository {
     }
 
     public void reset(String commitHash) {
+        commitHash = abbrHash(commitHash);
         commits = getCommits();
-        if (!commits.containsKey(commitHash)) {
-            throw new GitletException("No commit with that id exists.");
-        }
-
         Commit headCommit = getHead();
         Commit commit = commits.get(commitHash);
         for (String fileName: Utils.plainFilenamesIn(CWD)) {
@@ -403,11 +397,12 @@ public class Repository {
             }
         }
 
-        HashMap<String, String> blobs = commit.getBlobs();
+        for (String fileName: commit.getBlobs().keySet()) {
+            coverFile(fileName, headCommit);
+        }
+
         for (String fileName: Utils.plainFilenamesIn(CWD)) {
-            if (blobs.containsKey(fileName)) {
-                coverFile(fileName, commit);
-            } else {
+            if (!commit.getBlobs().containsKey(fileName)) {
                 Utils.restrictedDelete(fileName);
             }
         }
@@ -485,8 +480,8 @@ public class Repository {
             conflict = true;
         }
 
-        commit("Merged " + Utils.readContentsAsString(HEAD) + " into "
-                + branchName + ".", mergeCommit);
+        commit("Merged " + branchName + " into "
+                + Utils.readContentsAsString(HEAD) + ".", mergeCommit);
 
         if (conflict) {
             System.out.println("Encountered a merge conflict.");
@@ -744,6 +739,22 @@ public class Repository {
         staging.add(fileName, blob.getHash());
         Utils.writeObject(STAGING, staging);
         return true;
+    }
+
+    public String abbrHash(String hash) {
+        final int len = 40;
+        if (hash.length() == 40) {
+            return hash;
+        }
+
+        commits = getCommits();
+        for(String key: commits.keySet()) {
+            if (key.startsWith(hash)) {
+                return key;
+            }
+        }
+
+        throw new GitletException("No commit with that id exists.");
     }
 
     public File getRepo() {
