@@ -4,17 +4,17 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-// TODO: any imports you need here
+
 
 /** Represents a gitlet repository.
- *  TODO: It's a good idea to give a description here of what else this Class
+ *
  *  does at a high level.
  *
  *  @author TODO
  */
 public class Repository {
     /**
-     * TODO: add instance variables here.
+     *
      *
      * List all instance variables of the Repository class here with a useful
      * comment above them describing what that variable represents and how that
@@ -42,7 +42,7 @@ public class Repository {
     private Staging staging;
     private TreeMap<String, Commit> commits;
 
-    /* TODO: fill in the rest of this class. */
+
     public Repository() {
         /* directories */
         CWD = new File(System.getProperty("user.dir"));
@@ -61,7 +61,8 @@ public class Repository {
 
     public void init() {
         if (Utils.join(System.getProperty("user.dir"), ".gitlet").exists()) {
-            throw new GitletException("A Gitlet version-control system already exists in the current directory.");
+            throw new GitletException("A Gitlet version-control system"
+                    + "already exists in the current directory.");
         }
 
         GITLET.mkdir();
@@ -182,7 +183,8 @@ public class Repository {
     public void rm(String fileName) {
         staging = getStaging();
         Commit headCommit = getHead();
-        if (!staging.getAdd().containsKey(fileName) && !headCommit.getBlobs().containsKey(fileName)) {
+        if (!staging.getAdd().containsKey(fileName)
+                && !headCommit.getBlobs().containsKey(fileName)) {
             throw new GitletException("No reason to remove the file.");
         }
 
@@ -352,7 +354,7 @@ public class Repository {
         }
 
         for (String fileName: headCommit.getBlobs().keySet()) {
-            if (!headCommit.getBlobs().containsKey(fileName)) {
+            if (!branchCommit.getBlobs().containsKey(fileName)) {
                 Utils.restrictedDelete(fileName);
             }
         }
@@ -395,7 +397,7 @@ public class Repository {
         Commit commit = commits.get(commitHash);
         for (String fileName: Utils.plainFilenamesIn(CWD)) {
             if (!headCommit.getBlobs().containsKey(fileName)
-                    &&commit.getBlobs().containsKey(fileName)) {
+                    && commit.getBlobs().containsKey(fileName)) {
                 throw new GitletException("There is an untracked file in the way;"
                         + " delete it, or add and commit it first.");
             }
@@ -646,7 +648,6 @@ public class Repository {
         HashMap<String, String> splitBlobs = splitCommit.getBlobs();
         HashMap<String, String> headBlobs = headCommit.getBlobs();
         HashMap<String, String> mergeBlobs = mergeCommit.getBlobs();
-
         /*分叉点存在该文件*/
         if (splitBlobs.containsKey(fileName)) {
             /*在给定分支自分叉点以来被修改但在当前分支未修改，检出给定分支的该文件，并添加到暂存区*/
@@ -658,25 +659,21 @@ public class Repository {
                 Utils.writeObject(STAGING, staging);
                 return false;
             }
-
             /*当前分支中被修改但在给定分支未修改，不变*/
             if (headBlobs.containsKey(fileName)
-                    &&!splitBlobs.get(fileName).equals(headBlobs.get(fileName))
+                    && !splitBlobs.get(fileName).equals(headBlobs.get(fileName))
                     && splitBlobs.get(fileName).equals(mergeBlobs.get(fileName))) {
                 return false;
             }
-
             /*当前分支和给定分支中均被相同修改，不变*/
             if (headBlobs.containsKey(fileName) && mergeBlobs.containsKey(fileName)
                     && headBlobs.get(fileName).equals(mergeBlobs.get(fileName))) {
                 return false;
             }
-
             /*两个分支中都删除，不变*/
             if (!headBlobs.containsKey(fileName) && !mergeBlobs.containsKey(fileName)) {
                 return false;
             }
-
             /*当前分支未修改且在给定分支缺失，删除该文件*/
             if (headBlobs.get(fileName).equals(splitBlobs.get(fileName))
                     && !mergeBlobs.containsKey(fileName)) {
@@ -684,13 +681,11 @@ public class Repository {
                 Utils.writeObject(STAGING, staging);
                 return false;
             }
-
             /*给定分支未修改且在当前分支缺失，不变*/
             if (mergeBlobs.get(fileName).equals(splitBlobs.get(fileName))
                     && !headBlobs.containsKey(fileName)) {
                 return false;
             }
-
             /*两个分支文件都修改，且内容不同，冲突*/
             if (headBlobs.containsKey(fileName) && mergeBlobs.containsKey(fileName)
                     && !splitBlobs.get(fileName).equals(headBlobs.get(fileName))
@@ -698,7 +693,6 @@ public class Repository {
                     && !headBlobs.get(fileName).equals(mergeBlobs.get(fileName))) {
                 return mergeConflict(fileName, headBlobs, mergeBlobs);
             }
-
             /*一个分支文件被修改另一个分支文件被删除，冲突*/
             if (headBlobs.containsKey(fileName) && !mergeBlobs.containsKey(fileName)
                     && !splitBlobs.get(fileName).equals(headBlobs.get(fileName))
@@ -712,7 +706,6 @@ public class Repository {
             if (headBlobs.containsKey(fileName) && !mergeBlobs.containsKey(fileName)) {
                 return false;
             }
-
             /*仅在给定分支存在,被检出并暂存*/
             if (!headBlobs.containsKey(fileName) && mergeBlobs.containsKey(fileName)) {
                 checkout("checkout", mergeCommit.getHash(), "--", fileName);
@@ -720,7 +713,6 @@ public class Repository {
                 Utils.writeObject(STAGING, staging);
                 return false;
             }
-
             /*两个分支文件内容不同，冲突*/
             if (headBlobs.containsKey(fileName) && mergeBlobs.containsKey(fileName)
                     && headBlobs.get(fileName).equals(mergeBlobs.get(fileName))) {

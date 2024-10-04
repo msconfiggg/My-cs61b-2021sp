@@ -92,8 +92,20 @@ public class Main {
                 }
                 break;
             case "checkout":
-                if (args.length == 2 || args.length == 3 || args.length ==4) {
+                if (args.length == 2) {
                     repo.checkout(args);
+                } else if (args.length == 3) {
+                    if (args[1].equals("--")) {
+                        repo.checkout(args);
+                    } else {
+                        throw new GitletException("Incorrect operands.");
+                    }
+                } else if (args.length == 4) {
+                    if (args[2].equals("--")) {
+                        repo.checkout(args);
+                    } else {
+                        throw new GitletException("Incorrect operands.");
+                    }
                 } else {
                     throw new GitletException("Incorrect operands.");
                 }
