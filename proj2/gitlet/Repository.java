@@ -414,7 +414,7 @@ public class Repository {
         }
 
         for (String fileName: commit.getBlobs().keySet()) {
-            coverFile(fileName, headCommit);
+            coverFile(fileName, commit);
         }
 
         for (String fileName: Utils.plainFilenamesIn(CWD)) {
