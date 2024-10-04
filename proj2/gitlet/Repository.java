@@ -339,7 +339,7 @@ public class Repository {
             if (!headCommit.getBlobs().containsKey(fileName)) {
                 if (branchCommit.getBlobs().containsKey(fileName)) {
                     byte[] content = Utils.readContents(Utils.join(CWD, fileName));
-                    byte[] branchContent = Utils.readContents(Utils.join(BRANCHES,
+                    byte[] branchContent = Utils.readContents(Utils.join(BLOBS,
                             branchCommit.getBlobs().get(fileName)));
                     if (!content.equals(branchContent)) {
                         throw new GitletException("There is an untracked file in the way;"
@@ -675,14 +675,16 @@ public class Repository {
                 return false;
             }
             /*当前分支未修改且在给定分支缺失，删除该文件*/
-            if (headBlobs.get(fileName).equals(splitBlobs.get(fileName))
+            if (headBlobs.containsKey(fileName)
+                    && headBlobs.get(fileName).equals(splitBlobs.get(fileName))
                     && !mergeBlobs.containsKey(fileName)) {
                 rm(fileName);
                 Utils.writeObject(STAGING, staging);
                 return false;
             }
             /*给定分支未修改且在当前分支缺失，不变*/
-            if (mergeBlobs.get(fileName).equals(splitBlobs.get(fileName))
+            if (mergeBlobs.containsKey(fileName)
+                    && mergeBlobs.get(fileName).equals(splitBlobs.get(fileName))
                     && !headBlobs.containsKey(fileName)) {
                 return false;
             }
@@ -700,7 +702,6 @@ public class Repository {
                     && !splitBlobs.get(fileName).equals(mergeBlobs.get(fileName))) {
                 return mergeConflict(fileName, headBlobs, mergeBlobs);
             }
-        /*分叉点不存在该文件*/
         } else {
             /*仅在当前分支存在,不变*/
             if (headBlobs.containsKey(fileName) && !mergeBlobs.containsKey(fileName)) {
@@ -719,7 +720,6 @@ public class Repository {
                 return mergeConflict(fileName, headBlobs, mergeBlobs);
             }
         }
-
         Utils.writeObject(STAGING, staging);
         return false;
     }
