@@ -315,6 +315,10 @@ public class Repository {
         }
 
         commits = getCommits();
+        if (!commits.containsKey(commitHash)) {
+            throw new GitletException("No commit with that id exists.");
+        }
+
         Commit commit = commits.get(commitHash);
         if (!commit.getBlobs().containsKey(fileName)) {
             throw new GitletException("File does not exist in that commit.");
@@ -393,8 +397,12 @@ public class Repository {
         if (commitHash.equals("No commit with that id exists.")) {
             throw new GitletException("No commit with that id exists.");
         }
-        
+
         commits = getCommits();
+        if (!commits.containsKey(commitHash)) {
+            throw new GitletException("No commit with that id exists.");
+        }
+
         Commit headCommit = getHead();
         Commit commit = commits.get(commitHash);
         for (String fileName: Utils.plainFilenamesIn(CWD)) {
