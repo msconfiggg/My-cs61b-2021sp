@@ -55,7 +55,7 @@ public class Commit implements Serializable {
         }
 
         this.parent = parent;
-        this.parent = mergeParent;
+        this.mergeParent = mergeParent;
         this.blobs = new HashMap<>();
     }
 
