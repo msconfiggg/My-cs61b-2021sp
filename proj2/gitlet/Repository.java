@@ -727,7 +727,7 @@ public class Repository {
             }
             /*两个分支文件内容不同，冲突*/
             if (headBlobs.containsKey(fileName) && mergeBlobs.containsKey(fileName)
-                    && headBlobs.get(fileName).equals(mergeBlobs.get(fileName))) {
+                    && !headBlobs.get(fileName).equals(mergeBlobs.get(fileName))) {
                 return mergeConflict(fileName, headBlobs, mergeBlobs);
             }
         }
