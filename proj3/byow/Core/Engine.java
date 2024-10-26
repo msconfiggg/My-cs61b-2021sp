@@ -70,8 +70,6 @@ public class Engine {
 
     private void newGame(StringInputDevice inputDevice) {
         createWorld(inputDevice);
-        ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(world.getMap());
     }
 
     private void createWorld(StringInputDevice inputDevice) {
