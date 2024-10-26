@@ -12,7 +12,7 @@ public class Engine {
     /* Feel free to change the width and height. */
     public static final int WIDTH = 81;
     public static final int HEIGHT = 51;
-    private int seed;
+    private long seed;
     private World world;
 
     /**
@@ -87,7 +87,7 @@ public class Engine {
         while (inputDevice.possibleNextInput()) {
             char key = inputDevice.getNextKey();
             if (key == 'S' || key == 's') {
-                seed = Integer.parseInt(seedString.toString());
+                seed = Long.parseLong(seedString.toString());
                 return;
             } else {
                 seedString.append(key);
