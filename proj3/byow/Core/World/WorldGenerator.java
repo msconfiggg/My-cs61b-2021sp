@@ -74,7 +74,7 @@ public class WorldGenerator {
 
         // 随机方向数组
         Integer[] directions = {0, 1, 2, 3};  // 0:右, 1:下, 2:左, 3:上
-        Collections.shuffle(Arrays.asList(directions));
+        Collections.shuffle(Arrays.asList(directions), rand);
 
         for (int direction : directions) {
             switch (direction) {
