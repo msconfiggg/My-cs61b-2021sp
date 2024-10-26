@@ -55,7 +55,7 @@ public class Engine {
         StringInputDevice inputDevice = new StringInputDevice(input);
         evalInput(inputDevice);
 
-        return null;//暂时
+        return world.getMap();//暂时
     }
 
     private void evalInput(StringInputDevice inputDevice) {
