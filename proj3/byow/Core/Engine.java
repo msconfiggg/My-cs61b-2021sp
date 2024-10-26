@@ -1,13 +1,19 @@
 package byow.Core;
 
+import byow.InputDemo.StringInputDevice;
 import byow.TileEngine.TERenderer;
 import byow.TileEngine.TETile;
+import byow.Core.World.*;
+
+import java.util.Random;
 
 public class Engine {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
+    public static final int WIDTH = 81;
+    public static final int HEIGHT = 51;
+    private int seed;
+    private World world;
 
     /**
      * Method used for exploring a fresh world. This method should handle all inputs,
@@ -46,7 +52,46 @@ public class Engine {
         // See proj3.byow.InputDemo for a demo of how you can make a nice clean interface
         // that works for many different input types.
 
-        TETile[][] finalWorldFrame = null;
-        return finalWorldFrame;
+        StringInputDevice inputDevice = new StringInputDevice(input);
+        evalInput(inputDevice);
+
+        return null;//暂时
+    }
+
+    private void evalInput(StringInputDevice inputDevice) {
+        while (inputDevice.possibleNextInput()) {
+            char key = inputDevice.getNextKey();
+            switch (key) {
+                case 'N', 'n':
+                    newGame(inputDevice);
+            }
+        }
+    }
+
+    private void newGame(StringInputDevice inputDevice) {
+        createWorld(inputDevice);
+        ter.initialize(WIDTH, HEIGHT);
+        ter.renderFrame(world.getMap());
+    }
+
+    private void createWorld(StringInputDevice inputDevice) {
+        setSeed(inputDevice);
+        Random rand = new Random(seed);
+        WorldGenerator worldGen = new WorldGenerator(WIDTH, HEIGHT, rand);
+        worldGen.generateWorld();
+        world = worldGen.getWorld();
+    }
+
+    private void setSeed(StringInputDevice inputDevice) {
+        StringBuilder seedString = new StringBuilder();
+        while (inputDevice.possibleNextInput()) {
+            char key = inputDevice.getNextKey();
+            if (key == 'S' || key == 's') {
+                seed = Integer.parseInt(seedString.toString());
+                return;
+            } else {
+                seedString.append(key);
+            }
+        }
     }
 }
