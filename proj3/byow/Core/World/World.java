@@ -2,10 +2,12 @@ package byow.Core.World;
 
 import byow.TileEngine.TETile;
 
-public class World {
-    private int width;
-    private int height;
-    private TETile[][] map;
+import java.io.Serializable;
+
+public class World implements Serializable {
+    private final int width;
+    private final int height;
+    private final TETile[][] map;
 
     public World(int width, int height, TETile tile) {
         this.width = width;
@@ -25,4 +27,10 @@ public class World {
     public int getWidth() { return width; }
 
     public int getHeight() { return height; }
+
+    public TETile getTile(int x, int y) { return map[x][y]; }
+
+    public boolean isPointValid(int x, int y) {
+        return x >= 0  && x < width && y >= 0 && y < height;
+    }
 }

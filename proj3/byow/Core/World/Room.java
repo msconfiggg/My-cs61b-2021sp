@@ -4,12 +4,12 @@ import byow.TileEngine.TETile;
 import byow.TileEngine.Tileset;
 
 public class Room {
-    private int x;
-    private int y;
-    private int halfWidth;
-    private int halfHeight;
-    private TETile[][] map;
-    private World world;
+    private final int x;
+    private final int y;
+    private final int halfWidth;
+    private final int halfHeight;
+    private final TETile[][] map;
+    private final World world;
 
     public Room(int x, int y, int halfWidth, int halfHeight, World world) {
         this.x = x;

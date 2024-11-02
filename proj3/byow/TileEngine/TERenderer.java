@@ -4,6 +4,7 @@ import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.Serializable;
 
 /**
  * Utility class for rendering tiles. You do not need to modify this file. You're welcome
@@ -11,7 +12,7 @@ import java.awt.Font;
  * messing with this renderer, unless you're trying to do something fancy like
  * allowing scrolling of the screen or tracking the avatar or something similar.
  */
-public class TERenderer {
+public class TERenderer implements Serializable {
     private static final int TILE_SIZE = 16;
     private int width;
     private int height;
@@ -97,5 +98,34 @@ public class TERenderer {
             }
         }
         StdDraw.show();
+    }
+
+    public void renderFrame(TETile[][] world, String hud_message) {
+        int numXTiles = world.length;
+        int numYTiles = world[0].length;
+        StdDraw.clear(new Color(0, 0, 0));
+        for (int x = 0; x < numXTiles; x += 1) {
+            for (int y = 0; y < numYTiles; y += 1) {
+                if (world[x][y] == null) {
+                    throw new IllegalArgumentException("Tile at position x=" + x + ", y=" + y
+                            + " is null.");
+                }
+                world[x][y].draw(x + xOffset, y + yOffset);
+            }
+        }
+
+        StdDraw.setXscale(0, width);
+        StdDraw.setYscale(0, height);
+
+        // Display HUD
+        Font font = new Font("Monaco", Font.BOLD, 14);
+        StdDraw.setFont(font);
+        StdDraw.setPenColor(Color.WHITE);
+
+        // Draw HUD Message
+        StdDraw.text(2, height - 1, hud_message);
+
+        StdDraw.show();
+        StdDraw.pause(20);
     }
 }
