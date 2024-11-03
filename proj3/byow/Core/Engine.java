@@ -91,7 +91,7 @@ public class Engine {
             case MENU:
                 if (key == 'N' || key == 'n') {
                     gameState = SET_SEED;
-                    displaySeedMenu();
+                    //displaySeedMenu();
                 } else if (key == 'L' || key == 'l') {
                     loadGame();
                     gameState = PLAY;
@@ -106,7 +106,7 @@ public class Engine {
                     newGame();
                 } else {
                     seed = seed * 10 + Character.getNumericValue(key);
-                    displaySeedMenu();
+                    //displaySeedMenu();
                 }
                 break;
             case PLAY:
@@ -185,8 +185,8 @@ public class Engine {
         worldGen.generateWorld();
         world = worldGen.getWorld();
         addPlayer();
-        ter.initialize(WIDTH, HEIGHT);
-        ter.renderFrame(world.getMap(), "");
+        //ter.initialize(WIDTH, HEIGHT);
+        //ter.renderFrame(world.getMap(), "");
     }
 
     private void loadGame() {
@@ -199,9 +199,9 @@ public class Engine {
                 rand = (Random) os.readObject();
                 world = (World) os.readObject();
                 player = (Player) os.readObject();
-                ter.initialize(WIDTH, HEIGHT);
-                ter = (TERenderer) os.readObject();
-                ter.renderFrame(world.getMap(), "");
+                //ter.initialize(WIDTH, HEIGHT);
+                //ter = (TERenderer) os.readObject();
+                //ter.renderFrame(world.getMap(), "");
             } catch (FileNotFoundException e) {
                 System.out.println("file not found");
                 System.exit(0);
@@ -248,6 +248,6 @@ public class Engine {
 
     private void playRound(char key) {
         player.move(key);
-        ter.renderFrame(world.getMap(), "");
+        //ter.renderFrame(world.getMap(), "");
     }
 }
