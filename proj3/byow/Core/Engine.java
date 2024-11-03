@@ -70,7 +70,6 @@ public class Engine {
      * @return the 2D TETile[][] representing the state of the world
      */
     public TETile[][] interactWithInputString(String input) {
-        // TODO: Fill out this method so that it run the engine using the input
         // passed in as an argument, and return a 2D tile representation of the
         // world that would have been drawn if the same inputs had been given
         // to interactWithKeyboard().
@@ -90,19 +89,19 @@ public class Engine {
     private void evalKey(char key) {
         switch (gameState) {
             case MENU:
-                if (key == 'N') {
+                if (key == 'N' || key == 'n') {
                     gameState = SET_SEED;
                     displaySeedMenu();
-                } else if (key == 'L') {
+                } else if (key == 'L' || key == 'l') {
                     loadGame();
                     gameState = PLAY;
-                } else if (key == 'Q') {
+                } else if (key == 'Q' || key == 'q') {
                     active = false;
                     System.exit(0);
                 }
                 break;
             case SET_SEED:
-                if (key == 'S') {
+                if (key == 'S' || key == 's') {
                     gameState = PLAY;
                     newGame();
                 } else {
@@ -118,13 +117,15 @@ public class Engine {
                 }
                 break;
             case COMMAND:
-                if (key == 'Q') {
+                if (key == 'Q' || key == 'q') {
                     saveGame();
                     active = false;
                     System.exit(0);
                 } else {
                     gameState = PLAY;
                 }
+                break;
+            default:
         }
     }
 

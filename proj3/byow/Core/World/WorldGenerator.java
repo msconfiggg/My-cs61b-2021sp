@@ -42,7 +42,7 @@ public class WorldGenerator {
             while (y % 2 == 0) {
                 y = rand.nextInt(height);
             }
-            int halfWidth = (rand.nextInt(3) + 1) * 2;//确保是偶数
+            int halfWidth = (rand.nextInt(3) + 1) * 2; //确保是偶数
             int halfHeight = (rand.nextInt(3) + 1) * 2;
             Room room = new Room(x, y, halfWidth, halfHeight, world);
             if (room.isAvail()) {
@@ -106,6 +106,7 @@ public class WorldGenerator {
                         addPath(x, y - 2);
                     }
                     break;
+                default:
             }
         }
     }
@@ -155,16 +156,16 @@ public class WorldGenerator {
     }
 
     public void connect() {
-        addToMap(1, 1, visited);
+        addToMap(1, 1);
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (!map[i][j].equals(Tileset.NOTHING)) {
                     continue;
                 }
 
-                int count = 0;//大于等于2
-                boolean flag1 = false;//周围有在set中的FLOOR块
-                boolean flag2 = false;//周围有不在set中的FLOOR块
+                int count = 0; //大于等于2
+                boolean flag1 = false; //周围有在set中的FLOOR块
+                boolean flag2 = false; //周围有不在set中的FLOOR块
 
                 if (i - 1 >= 0 && map[i - 1][j].equals(Tileset.FLOOR)) {
                     count += 1;
@@ -208,13 +209,13 @@ public class WorldGenerator {
 
                 if (count >= 2 && flag1 && flag2) {
                     map[i][j] = Tileset.FLOOR;
-                    addToMap(i, j, visited);
+                    addToMap(i, j);
                 }
             }
         }
     }
 
-    public void addToMap(int x, int y, HashSet<Pair<Integer, Integer>> visited) {
+    public void addToMap(int x, int y) {
         Pair<Integer, Integer> point = new Pair<>(x, y);
         if (visited.contains(point)) {
             return;
@@ -223,19 +224,19 @@ public class WorldGenerator {
         points.add(point);
         visited.add(point);
         if (x - 1 >= 0 && map[x - 1][y].equals(Tileset.FLOOR)) {
-            addToMap(x - 1, y, visited);
+            addToMap(x - 1, y);
         }
 
         if (x + 1 < width && map[x + 1][y].equals(Tileset.FLOOR)) {
-            addToMap(x + 1, y, visited);
+            addToMap(x + 1, y);
         }
 
         if (y - 1 >= 0 && map[x][y - 1].equals(Tileset.FLOOR)) {
-            addToMap(x, y - 1, visited);
+            addToMap(x, y - 1);
         }
 
         if (y + 1 < height && map[x][y + 1].equals(Tileset.FLOOR)) {
-            addToMap(x, y + 1, visited);
+            addToMap(x, y + 1);
         }
     }
 

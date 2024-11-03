@@ -100,7 +100,7 @@ public class TERenderer implements Serializable {
         StdDraw.show();
     }
 
-    public void renderFrame(TETile[][] world, String hud_message) {
+    public void renderFrame(TETile[][] world, String hudMessage) {
         int numXTiles = world.length;
         int numYTiles = world[0].length;
         StdDraw.clear(new Color(0, 0, 0));
@@ -123,7 +123,7 @@ public class TERenderer implements Serializable {
         StdDraw.setPenColor(Color.WHITE);
 
         // Draw HUD Message
-        StdDraw.text(2, height - 1, hud_message);
+        StdDraw.text(2, height - 1, hudMessage);
 
         StdDraw.show();
         StdDraw.pause(20);

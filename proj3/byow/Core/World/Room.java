@@ -38,7 +38,7 @@ public class Room {
         }
 
         for (int i = x - halfWidth - 1; i <= x + halfWidth + 1; i++) {
-            for (int j = y - halfHeight - 1; j <= y + halfHeight +1; j++) {
+            for (int j = y - halfHeight - 1; j <= y + halfHeight + 1; j++) {
                 if (!map[i][j].equals(Tileset.NOTHING)) {
                     return false;
                 }
