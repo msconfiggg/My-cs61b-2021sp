@@ -84,7 +84,7 @@ public class Engine {
             evalKey(key);
         }
 
-        return world.getMap();//暂时
+        return world.getMap();
     }
 
     private void evalKey(char key) {
@@ -194,10 +194,11 @@ public class Engine {
             try {
                 FileInputStream fs = new FileInputStream(f);
                 ObjectInputStream os = new ObjectInputStream(fs);
-                player = (Player) os.readObject();
-                world = (World) os.readObject();
                 seed = (long) os.readObject();
                 rand = (Random) os.readObject();
+                world = (World) os.readObject();
+                player = (Player) os.readObject();
+                ter.initialize(WIDTH, HEIGHT);
                 ter = (TERenderer) os.readObject();
                 ter.renderFrame(world.getMap(), "");
             } catch (FileNotFoundException e) {
@@ -222,11 +223,12 @@ public class Engine {
 
             FileOutputStream fs = new FileOutputStream(f);
             ObjectOutputStream os = new ObjectOutputStream(fs);
-            os.writeObject(player);
-            os.writeObject(world);
             os.writeObject(seed);
             os.writeObject(rand);
+            os.writeObject(world);
+            os.writeObject(player);
             os.writeObject(ter);
+            os.close();
         } catch (FileNotFoundException e) {
             System.out.println("file not found");
             System.exit(0);

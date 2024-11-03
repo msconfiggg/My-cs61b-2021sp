@@ -28,6 +28,6 @@ public class RoleUtils {
             return false;
         }
 
-        return world.getTile(x, y).equals(Tileset.FLOOR);
+        return world.getTile(x, y).character() == Tileset.FLOOR.character();//用equals会出问题
     }
 }
